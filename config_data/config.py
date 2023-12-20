@@ -5,11 +5,17 @@ from environs import Env
 class TgBot:
     token: str
     admin_ids: list[int]
+    rapid_api_key: str
 
 
 @dataclass
 class Config:
     tg_bot: TgBot
+
+
+@dataclass
+class RapidAPI:
+    rapid_api_key: str
 
 
 def load_config(path: str | None = None) -> Config:
@@ -18,6 +24,7 @@ def load_config(path: str | None = None) -> Config:
     return Config(
         tg_bot=TgBot(
             token=env('BOT_TOKEN'),
-            admin_ids=list(map(int, env.list('ADMIN_IDS')))
+            admin_ids=list(map(int, env.list('ADMIN_IDS'))),
+            rapid_api_key=env('RAPID_API_KEY')
         )
     )
